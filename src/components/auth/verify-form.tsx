@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { verifyOtpSchema } from '@/lib/utils/validation';
-import { verifyOtp } from '@/lib/utils/auth-helpers';
-import { Button } from '@/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,10 +15,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { motion } from 'framer-motion';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { verifyOtp } from "@/lib/utils/auth-helpers";
+import { verifyOtpSchema } from "@/lib/utils/validation";
 
 type FormData = z.infer<typeof verifyOtpSchema>;
 
@@ -32,19 +32,19 @@ export function VerifyForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(verifyOtpSchema),
     defaultValues: {
-      otp: '',
+      otp: "",
     },
   });
 
   useEffect(() => {
-    const storedEmail = sessionStorage.getItem('verificationEmail');
+    const storedEmail = sessionStorage.getItem("verificationEmail");
     if (!storedEmail) {
-      router.push('/auth/signup');
+      router.push("/auth/signup");
       return;
     }
 
-    const passwordResetFlag = sessionStorage.getItem('isPasswordReset');
-    setIsPasswordReset(passwordResetFlag === 'true');
+    const passwordResetFlag = sessionStorage.getItem("isPasswordReset");
+    setIsPasswordReset(passwordResetFlag === "true");
 
     setEmail(storedEmail);
   }, [router]);
@@ -57,32 +57,32 @@ export function VerifyForm() {
 
     try {
       await verifyOtp(email, data.otp);
-      sessionStorage.removeItem('verificationEmail');
+      sessionStorage.removeItem("verificationEmail");
 
       if (isPasswordReset) {
-        router.push('/auth/new-password');
+        router.push("/auth/new-password");
       } else {
-        sessionStorage.removeItem('isPasswordReset');
+        sessionStorage.removeItem("isPasswordReset");
 
-        await fetch('/api/resend', {
-          method: 'POST',
+        await fetch("/api/resend", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            type: 'welcome',
+            type: "welcome",
             email: email,
             origin: window.location.origin,
           }),
         });
 
-        router.push('/dashboard');
+        router.push("/dashboard");
       }
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
-          : 'An error occurred during verification'
+          : "An error occurred during verification",
       );
     } finally {
       setIsLoading(false);
@@ -97,24 +97,24 @@ export function VerifyForm() {
 
     try {
       // Resend verification email
-      await fetch('/api/resend', {
-        method: 'POST',
+      await fetch("/api/resend", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: 'verification',
+          type: "verification",
           email,
           isPasswordReset: isPasswordReset,
         }),
       });
 
-      setError('A new verification code has been sent to your email.');
+      setError("A new verification code has been sent to your email.");
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
-          : 'Failed to resend verification code'
+          : "Failed to resend verification code",
       );
     } finally {
       setIsLoading(false);
@@ -135,7 +135,7 @@ export function VerifyForm() {
         >
           <Alert
             variant={
-              error.includes('has been sent') ? 'default' : 'destructive'
+              error.includes("has been sent") ? "default" : "destructive"
             }
           >
             <AlertDescription>{error}</AlertDescription>
@@ -145,13 +145,13 @@ export function VerifyForm() {
 
       <div className="text-center mb-4">
         <p>
-          We&apos;ve sent a verification code to{' '}
+          We&apos;ve sent a verification code to{" "}
           <span className="font-medium">{email}</span>
         </p>
         <p className="text-sm text-muted-foreground mt-1">
           {isPasswordReset
-            ? 'Enter the code to continue with your password reset'
-            : 'Enter the code to verify your account'}
+            ? "Enter the code to continue with your password reset"
+            : "Enter the code to verify your account"}
         </p>
       </div>
 
@@ -178,17 +178,18 @@ export function VerifyForm() {
 
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading
-              ? 'Verifying...'
+              ? "Verifying..."
               : isPasswordReset
-                ? 'Continue Password Reset'
-                : 'Verify Email'}
+                ? "Continue Password Reset"
+                : "Verify Email"}
           </Button>
         </form>
       </Form>
 
       <div className="text-center text-sm">
-        Didn&apos;t receive the code?{' '}
+        Didn&apos;t receive the code?{" "}
         <button
+          type="button"
           onClick={resendOtp}
           className="text-blue-600 hover:underline"
           disabled={isLoading}

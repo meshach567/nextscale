@@ -1,7 +1,14 @@
-'use client';
+"use client";
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,17 +16,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { login } from '@/lib/utils/auth-helpers';
-import { loginSchema } from '@/lib/utils/validation';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { login } from "@/lib/utils/auth-helpers";
+import { loginSchema } from "@/lib/utils/validation";
 
 type FormData = z.infer<typeof loginSchema>;
 
@@ -31,8 +31,8 @@ export function LoginForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -42,10 +42,10 @@ export function LoginForm() {
 
     try {
       await login(data.email, data.password);
-      router.push('/dashboard');
+      router.push("/dashboard");
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : 'Invalid email or password'
+        error instanceof Error ? error.message : "Invalid email or password",
       );
     } finally {
       setIsLoading(false);
@@ -106,13 +106,13 @@ export function LoginForm() {
           </div>
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Signing in...' : 'Sign in'}
+            {isLoading ? "Signing in..." : "Sign in"}
           </Button>
         </form>
       </Form>
 
       <div className="text-center text-sm">
-        Don&apos;t have an account?{' '}
+        Don&apos;t have an account?{" "}
         <Link href="/auth/signup" className="text-blue-600 hover:underline">
           Sign up
         </Link>

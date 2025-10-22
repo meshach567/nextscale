@@ -1,5 +1,8 @@
-'use client';
+"use client";
 
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import {
   Card,
   CardContent,
@@ -7,10 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { ThemeToggle } from '@/components/theme/theme-toggle';
-import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+} from "@/components/ui/card";
 
 interface AuthFormProps {
   title: string;
