@@ -8,9 +8,9 @@ const Footer = () => {
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-6">
               <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <span className="text-white font-bold text-lg">BL</span>
+                <span className="text-white font-bold text-lg">NS</span>
               </div>
-              <span className="text-2xl font-bold">BuiltAndLaunch</span>
+              <span className="text-2xl font-bold">NextScale</span>
             </div>
             <p className="text-background/80 mb-6 max-w-md leading-relaxed">
               Building digital empires for Nigeria's most successful companies.
