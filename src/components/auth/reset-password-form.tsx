@@ -1,7 +1,14 @@
-'use client';
+"use client";
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,16 +16,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { resetPasswordSchema } from '@/lib/utils/validation';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { resetPasswordSchema } from "@/lib/utils/validation";
 
 type FormData = z.infer<typeof resetPasswordSchema>;
 
@@ -30,7 +30,7 @@ export function ResetPasswordForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: '',
+      email: "",
     },
   });
 
@@ -39,26 +39,26 @@ export function ResetPasswordForm() {
     setError(null);
 
     try {
-      sessionStorage.setItem('verificationEmail', data.email);
-      sessionStorage.setItem('isPasswordReset', 'true');
+      sessionStorage.setItem("verificationEmail", data.email);
+      sessionStorage.setItem("isPasswordReset", "true");
 
-      await fetch('/api/resend', {
-        method: 'POST',
+      await fetch("/api/resend", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: 'verification',
+          type: "verification",
           email: data.email,
           isPasswordReset: true,
           origin: window.location.origin,
         }),
       });
 
-      router.push('/auth/verify');
+      router.push("/auth/verify");
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : 'Failed to send reset email'
+        error instanceof Error ? error.message : "Failed to send reset email",
       );
     } finally {
       setIsLoading(false);
@@ -96,13 +96,13 @@ export function ResetPasswordForm() {
           />
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Sending reset link...' : 'Send reset link'}
+            {isLoading ? "Sending reset link..." : "Send reset link"}
           </Button>
         </form>
       </Form>
 
       <div className="text-center text-sm">
-        Remember your password?{' '}
+        Remember your password?{" "}
         <Link href="/auth/login" className="text-blue-600 hover:underline">
           Sign in
         </Link>

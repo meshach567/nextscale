@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { newPasswordSchema } from '@/lib/utils/validation';
-import { updatePassword } from '@/lib/utils/auth-helpers';
-import { Button } from '@/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,12 +16,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { createClient } from '@/utils/supabase/client';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { updatePassword } from "@/lib/utils/auth-helpers";
+import { newPasswordSchema } from "@/lib/utils/validation";
+import { createClient } from "@/utils/supabase/client";
 
 type FormData = z.infer<typeof newPasswordSchema>;
 
@@ -34,8 +34,8 @@ export function NewPasswordForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(newPasswordSchema),
     defaultValues: {
-      password: '',
-      confirmPassword: '',
+      password: "",
+      confirmPassword: "",
     },
   });
 
@@ -46,7 +46,7 @@ export function NewPasswordForm() {
       const { data } = await supabase.auth.getSession();
 
       if (!data.session) {
-        router.push('/auth/reset-password');
+        router.push("/auth/reset-password");
         return;
       }
 
@@ -68,13 +68,13 @@ export function NewPasswordForm() {
       await updatePassword(data.password);
 
       if (userEmail) {
-        await fetch('/api/resend', {
-          method: 'POST',
+        await fetch("/api/resend", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            type: 'password-reset-confirmation',
+            type: "password-reset-confirmation",
             email: userEmail,
             origin: window.location.origin,
           }),
@@ -86,12 +86,12 @@ export function NewPasswordForm() {
 
       setIsSuccess(true);
 
-      sessionStorage.removeItem('isPasswordReset');
+      sessionStorage.removeItem("isPasswordReset");
     } catch (error) {
       setError(
         error instanceof Error
           ? error.message
-          : 'An error occurred. Please try again.'
+          : "An error occurred. Please try again.",
       );
     } finally {
       setIsLoading(false);
@@ -165,7 +165,7 @@ export function NewPasswordForm() {
           />
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Updating password...' : 'Update password'}
+            {isLoading ? "Updating password..." : "Update password"}
           </Button>
         </form>
       </Form>
