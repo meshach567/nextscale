@@ -5,7 +5,7 @@
 // ============================================
 // FILE: components/QuickContact.tsx
 // ============================================
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, MapPin, Phone } from "lucide-react";
 
 export default function QuickContact() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP;
@@ -13,11 +13,13 @@ export default function QuickContact() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
-      <h2 className="text-2xl font-semibold text-slate-900 mb-6">Quick Contact</h2>
+      <h2 className="text-2xl font-semibold text-slate-900 mb-6">
+        Quick Contact
+      </h2>
       <div className="space-y-4">
         {whatsappNumber && (
           <a
-            href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`}
+            href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 p-4 bg-green-50 hover:bg-green-100 rounded-lg transition group"
@@ -25,7 +27,9 @@ export default function QuickContact() {
             <Phone className="w-5 h-5 text-green-600" />
             <div>
               <div className="font-medium text-slate-900">WhatsApp</div>
-              <div className="text-sm text-slate-600">Chat with us instantly</div>
+              <div className="text-sm text-slate-600">
+                Chat with us instantly
+              </div>
             </div>
           </a>
         )}
@@ -48,7 +52,8 @@ export default function QuickContact() {
           <div>
             <div className="font-medium text-slate-900">Office</div>
             <div className="text-sm text-slate-600">
-              123 Business Street<br />
+              123 Business Street
+              <br />
               Lagos, Nigeria
             </div>
           </div>
