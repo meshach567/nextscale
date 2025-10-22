@@ -1,9 +1,9 @@
 // app/error.tsx
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function GlobalError({
   error,
@@ -13,7 +13,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error('Server error:', error);
+    console.error("Server error:", error);
   }, [error]);
 
   return (
