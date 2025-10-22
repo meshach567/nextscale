@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Calendar } from 'lucide-react';
+import { Calendar } from "lucide-react";
+import { useState } from "react";
 
 export default function BookACall() {
   const [showCalendly, setShowCalendly] = useState(false);
@@ -16,9 +16,10 @@ export default function BookACall() {
       <p className="text-slate-600 mb-6">
         Schedule a 15-minute discovery call to discuss your project in detail.
       </p>
-      
+
       {!showCalendly ? (
         <button
+          type="button"
           onClick={() => setShowCalendly(true)}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition"
         >
@@ -26,7 +27,7 @@ export default function BookACall() {
         </button>
       ) : (
         <div className="bg-white rounded-lg overflow-hidden border border-slate-200">
-          <div className="relative w-full" style={{ paddingBottom: '800px' }}>
+          <div className="relative w-full" style={{ paddingBottom: "800px" }}>
             <iframe
               src={calendlyUrl}
               width="100%"
@@ -37,6 +38,7 @@ export default function BookACall() {
             />
           </div>
           <button
+            type="button"
             onClick={() => setShowCalendly(false)}
             className="w-full py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition"
           >

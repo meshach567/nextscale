@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Calendar } from 'lucide-react';
+import { Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function CTA() {
-  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/your-link';
+  const calendlyUrl =
+    process.env.NEXT_PUBLIC_CALENDLY_URL || "https://calendly.com/your-link";
 
   const handleBookCall = () => {
-    window.open(calendlyUrl, '_blank', 'noopener,noreferrer');
+    window.open(calendlyUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -19,11 +20,12 @@ export default function CTA() {
               Not sure what service fits? Book a free call.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              Let's discuss your project and find the perfect solution for your business.
+              Let's discuss your project and find the perfect solution for your
+              business.
             </p>
           </div>
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             onClick={handleBookCall}
             className="shrink-0 gap-2"
             aria-label="Book a free consultation call"
