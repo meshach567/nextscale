@@ -1,14 +1,14 @@
-import { createClient } from '@/utils/supabase/client';
+import { createClient } from "@/utils/supabase/client";
 
 export async function verifyOtp(email: string, otp: string) {
   const supabase = createClient();
 
-  const isPasswordReset = sessionStorage.getItem('isPasswordReset') === 'true';
+  const isPasswordReset = sessionStorage.getItem("isPasswordReset") === "true";
 
   const { data, error } = await supabase.auth.verifyOtp({
     token: otp,
     email,
-    type: isPasswordReset ? 'recovery' : 'email',
+    type: isPasswordReset ? "recovery" : "email",
   });
 
   if (error) throw error;
