@@ -1,5 +1,16 @@
-import Image from "next/image";
+// lucide icons — ensure names exist in lucide-react
+import {
+  ArrowRight,
+  Code,
+  Headphones,
+  Layers,
+  Palette,
+  Sparkles,
+} from "lucide-react";
 import Link from "next/link";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,19 +19,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-// lucide icons — ensure names exist in lucide-react
-import {
-  ArrowRight,
-  Code,
-  Palette,
-  Layers,
-  Sparkles,
-  Headphones,
-} from "lucide-react";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Footer from "@/components/Footer";
 
 export default function Home() {
   const industries = [
@@ -354,9 +352,9 @@ export default function Home() {
               >
                 <CardContent className="pt-8 pb-8">
                   <div className="flex items-center gap-1 mb-6">
-                    {[...Array(5)].map((_, i) => (
+                    {Array.from({ length: 5 }, (_, i) => (
                       <Sparkles
-                        key={i}
+                        key={`sparkle-${i}`}
                         className="h-5 w-5 text-accent fill-current"
                       />
                     ))}
