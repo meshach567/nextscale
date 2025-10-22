@@ -7,7 +7,7 @@ import {
   Preview,
   Section,
   Text,
-} from '@react-email/components';
+} from "@react-email/components";
 
 interface ResetPasswordEmailProps {
   otp: string;
@@ -42,46 +42,46 @@ export const ResetPasswordEmail = ({ otp }: ResetPasswordEmailProps) => {
 };
 
 const main = {
-  backgroundColor: '#f6f9fc',
+  backgroundColor: "#f6f9fc",
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
 };
 
 const container = {
-  margin: '0 auto',
-  padding: '20px 0 48px',
-  maxWidth: '580px',
+  margin: "0 auto",
+  padding: "20px 0 48px",
+  maxWidth: "580px",
 };
 
 const h1 = {
-  color: '#333',
-  fontSize: '24px',
-  fontWeight: '600',
-  lineHeight: '1.25',
-  marginBottom: '24px',
-  textAlign: 'center' as const,
+  color: "#333",
+  fontSize: "24px",
+  fontWeight: "600",
+  lineHeight: "1.25",
+  marginBottom: "24px",
+  textAlign: "center" as const,
 };
 
 const text = {
-  color: '#555',
-  fontSize: '16px',
-  lineHeight: '1.5',
-  marginBottom: '24px',
+  color: "#555",
+  fontSize: "16px",
+  lineHeight: "1.5",
+  marginBottom: "24px",
 };
 
 const codeContainer = {
-  background: '#f4f4f4',
-  borderRadius: '4px',
-  padding: '16px',
-  marginBottom: '24px',
-  textAlign: 'center' as const,
+  background: "#f4f4f4",
+  borderRadius: "4px",
+  padding: "16px",
+  marginBottom: "24px",
+  textAlign: "center" as const,
 };
 
 const code = {
-  color: '#333',
-  fontSize: '24px',
-  fontWeight: 'bold',
-  letterSpacing: '4px',
+  color: "#333",
+  fontSize: "24px",
+  fontWeight: "bold",
+  letterSpacing: "4px",
 };
 
 export default ResetPasswordEmail;
