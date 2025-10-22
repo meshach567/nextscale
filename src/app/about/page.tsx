@@ -1,7 +1,7 @@
 /**
  * About Page - Build and Launch
  * Contact: contact@buildandlaunch.ng
- * 
+ *
  * README:
  * - Replace placeholder image paths with actual images in /public directory
  * - Update NEXT_PUBLIC_CALENDLY_URL in .env.local with your Calendly link
@@ -9,45 +9,48 @@
  * - Ensure /public/founder.jpg and /public/og/about.png exist
  */
 
-import type { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { ArrowRight, Phone, Shield, Rocket, Lightbulb } from 'lucide-react'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import { ArrowRight, Lightbulb, Phone, Rocket, Shield } from "lucide-react";
+import type { Metadata } from "next";
+// Image import removed - unused
+import Link from "next/link";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+// Badge import removed - unused
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 // SEO Metadata
 export const metadata: Metadata = {
-  title: 'About — Build and Launch',
-  description: "We close the digital gap for Nigeria's high-value industries — building investor-ready websites, scalable fintech flows and secure platforms.",
+  title: "About — Build and Launch",
+  description:
+    "We close the digital gap for Nigeria's high-value industries — building investor-ready websites, scalable fintech flows and secure platforms.",
   openGraph: {
-    title: 'About — Build and Launch',
-    description: "We close the digital gap for Nigeria's high-value industries — building investor-ready websites, scalable fintech flows and secure platforms.",
-    type: 'website',
-    images: ['/og/about.png'],
-    locale: 'en_NG',
-    siteName: 'Build and Launch',
+    title: "About — Build and Launch",
+    description:
+      "We close the digital gap for Nigeria's high-value industries — building investor-ready websites, scalable fintech flows and secure platforms.",
+    type: "website",
+    images: ["/og/about.png"],
+    locale: "en_NG",
+    siteName: "Build and Launch",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'About — Build and Launch',
-    description: "We close the digital gap for Nigeria's high-value industries — building investor-ready websites, scalable fintech flows and secure platforms.",
-    images: ['/og/about.png'],
-  }
-}
+    card: "summary_large_image",
+    title: "About — Build and Launch",
+    description:
+      "We close the digital gap for Nigeria's high-value industries — building investor-ready websites, scalable fintech flows and secure platforms.",
+    images: ["/og/about.png"],
+  },
+};
 
 // Core Value Card Component
-function ValueCard({ 
-  icon: Icon, 
-  title, 
-  description 
-}: { 
-  icon: React.ElementType
-  title: string
-  description: string 
+function ValueCard({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: React.ElementType;
+  title: string;
+  description: string;
 }) {
   return (
     <Card className="border-gray-200 hover:border-gray-300 transition-colors">
@@ -60,12 +63,14 @@ function ValueCard({
           </div>
           <div className="space-y-1">
             <h3 className="font-semibold text-gray-900">{title}</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              {description}
+            </p>
           </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 // Stats Component
@@ -75,18 +80,18 @@ function StatItem({ value, label }: { value: string; label: string }) {
       <div className="text-3xl font-bold text-gray-900">{value}</div>
       <div className="text-sm text-gray-600 mt-1">{label}</div>
     </div>
-  )
+  );
 }
 
 // CTA Buttons Component (Client Component for interactivity)
 function CTAButtons() {
-  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL || '#'
-  
+  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL || "#";
+
   return (
     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <Button 
-        asChild 
-        size="lg" 
+      <Button
+        asChild
+        size="lg"
         className="bg-blue-600 hover:bg-blue-700 text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         <Link href="/contact">
@@ -94,9 +99,9 @@ function CTAButtons() {
           <ArrowRight className="ml-2 h-4 w-4" />
         </Link>
       </Button>
-      <Button 
-        asChild 
-        variant="outline" 
+      <Button
+        asChild
+        variant="outline"
         size="lg"
         className="border-gray-300 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
       >
@@ -106,31 +111,29 @@ function CTAButtons() {
         </a>
       </Button>
     </div>
-  )
+  );
 }
 
 export default function About() {
   return (
     <>
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Build and Launch",
-            "url": "https://buildandlaunch.ng",
-            "logo": "https://buildandlaunch.ng/logo.png",
-            "description": "We close the digital gap for Nigeria's high-value industries",
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "NG",
-              "addressLocality": "Lagos"
-            }
-          })
-        }}
-      />
+      {/* JSON-LD Structured Data (static and controlled content - safe to inject) */}
+      <script type="application/ld+json" suppressHydrationWarning>
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Build and Launch",
+          url: "https://buildandlaunch.ng",
+          logo: "https://buildandlaunch.ng/logo.png",
+          description:
+            "We close the digital gap for Nigeria's high-value industries",
+          address: {
+            "@type": "PostalAddress",
+            addressCountry: "NG",
+            addressLocality: "Lagos",
+          },
+        })}
+      </script>
 
       <main className="min-h-screen bg-white">
         <Header />
@@ -139,10 +142,12 @@ export default function About() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center space-y-4">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">
-                We build digital experiences for Nigeria's highest-value industries.
+                We build digital experiences for Nigeria's highest-value
+                industries.
               </h1>
               <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-                We design investor-ready platforms and scalable products for oil & gas, banking, real estate, agriculture and fintech.
+                We design investor-ready platforms and scalable products for oil
+                & gas, banking, real estate, agriculture and fintech.
               </p>
             </div>
           </div>
@@ -158,9 +163,11 @@ export default function About() {
                   Mission Statement
                 </h2>
                 <p className="text-gray-600 leading-relaxed text-lg">
-                  At Build and Launch, our mission is to close the digital gap in Nigeria's highest-value industries. 
-                  We design investor-ready platforms, secure fintech flows, and scalable web systems that earn trust, 
-                  increase transparency, and unlock real business value.
+                  At Build and Launch, our mission is to close the digital gap
+                  in Nigeria's highest-value industries. We design
+                  investor-ready platforms, secure fintech flows, and scalable
+                  web systems that earn trust, increase transparency, and unlock
+                  real business value.
                 </p>
               </div>
 
@@ -218,16 +225,20 @@ export default function About() {
               {/* Founder Text */}
               <div className="flex-1 space-y-4">
                 <p className="text-gray-600 leading-relaxed">
-                  Meshach Arinze founded Build and Launch after seeing major enterprises invest heavily in 
-                  infrastructure but neglect digital experiences. With 4 years building production web apps 
-                  and products across fintech and enterprise projects, Meshach started the agency to bring 
-                  global-standard web platforms to Nigeria's most important sectors.
+                  Meshach Arinze founded Build and Launch after seeing major
+                  enterprises invest heavily in infrastructure but neglect
+                  digital experiences. With 4 years building production web apps
+                  and products across fintech and enterprise projects, Meshach
+                  started the agency to bring global-standard web platforms to
+                  Nigeria's most important sectors.
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  He believes great product design and rock-solid engineering together create confidence for 
-                  investors and ease for customers — and that's what drives every project. His personal 
-                  commitment to accountability means every client has direct access to leadership, ensuring 
-                  projects stay aligned with business goals from start to launch.
+                  He believes great product design and rock-solid engineering
+                  together create confidence for investors and ease for
+                  customers — and that's what drives every project. His personal
+                  commitment to accountability means every client has direct
+                  access to leadership, ensuring projects stay aligned with
+                  business goals from start to launch.
                 </p>
               </div>
             </div>
@@ -257,5 +268,5 @@ export default function About() {
         <Footer />
       </main>
     </>
-  )
+  );
 }
