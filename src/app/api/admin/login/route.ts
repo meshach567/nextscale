@@ -1,8 +1,8 @@
 // ============================================
 // FILE: app/api/admin/login/route.ts
 // ============================================
-import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,18 +10,18 @@ export async function POST(request: NextRequest) {
 
     if (password === process.env.ADMIN_PASSWORD) {
       const cookieStore = await cookies();
-      cookieStore.set('admin_auth', password, {
+      cookieStore.set("admin_auth", password, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
         maxAge: 86400, // 24 hours
       });
 
       return NextResponse.json({ ok: true });
     }
 
-    return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
-  } catch (error) {
-    return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
+    return NextResponse.json({ error: "Invalid password" }, { status: 401 });
+  } catch (_error) {
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
   }
 }
