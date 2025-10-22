@@ -1,9 +1,7 @@
 "use client";
-import React from "react";
-import { Sparkles } from "lucide-react";
-import { Button } from "./ui/button";
+import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { Button } from "./ui/button";
 
 const Hero = () => {
   return (
