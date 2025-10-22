@@ -2,36 +2,38 @@
 
 @theme {
   /* BuiltAndLaunch Brand Colors */
-  --color-primary: #2563EB;           /* Primary Blue */
-  --color-primary-foreground: #FFFFFF;
-  --color-secondary: #38BDF8;         /* Secondary Sky Blue */
-  --color-secondary-foreground: #1E293B;
-  --color-accent: #F97316;            /* Accent Orange (Launch) */
-  --color-accent-foreground: #FFFFFF;
-  
+  --color-primary: #2563eb; /* Primary Blue */
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #38bdf8; /* Secondary Sky Blue */
+  --color-secondary-foreground: #1e293b;
+  --color-accent: #f97316; /* Accent Orange (Launch) */
+  --color-accent-foreground: #ffffff;
+
   /* Background & Text Colors */
-  --color-background: #FFFFFF;        /* Pure White */
-  --color-foreground: #1E293B;        /* Neutral Dark */
-  --color-muted: #F8FAFC;             /* Light Neutral */
-  --color-muted-foreground: #64748B;
-  
+  --color-background: #ffffff; /* Pure White */
+  --color-foreground: #1e293b; /* Neutral Dark */
+  --color-muted: #f8fafc; /* Light Neutral */
+  --color-muted-foreground: #64748b;
+
   /* Component Colors */
-  --color-card: #FFFFFF;
-  --color-card-foreground: #1E293B;
-  --color-popover: #FFFFFF;
-  --color-popover-foreground: #1E293B;
-  --color-destructive: #EF4444;
-  --color-destructive-foreground: #FFFFFF;
-  --color-border: #E2E8F0;
-  --color-input: #F1F5F9;
-  --color-ring: #2563EB;
-  
+  --color-card: #ffffff;
+  --color-card-foreground: #1e293b;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1e293b;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #e2e8f0;
+  --color-input: #f1f5f9;
+  --color-ring: #2563eb;
+
   /* Design System */
   --radius: 0.75rem;
   --radius-sm: 0.5rem;
   --radius-lg: 1rem;
-  
+
   /* Typography */
   --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  --font-mono:
+    ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
+    "Courier New", monospace;
 }
