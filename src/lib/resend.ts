@@ -1,15 +1,15 @@
-import { Resend } from 'resend';
-import type { ContactFormData } from './utils/validation';
+import { Resend } from "resend";
+import type { ContactFormData } from "./utils/validation";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendContactNotification(data: ContactFormData) {
   try {
-    const fromAddress = `Contact Form <noreply@${process.env.NEXT_PUBLIC_SITE_URL?.replace('https://', '') || 'yourdomain.com'}>`;
+    const fromAddress = `Contact Form <noreply@${process.env.NEXT_PUBLIC_SITE_URL?.replace("https://", "") || "yourdomain.com"}>`;
     const toAddress = process.env.FROM_EMAIL;
 
     if (!toAddress) {
-      throw new Error('Missing FROM_EMAIL environment variable');
+      throw new Error("Missing FROM_EMAIL environment variable");
     }
 
     const { data: emailData, error } = await resend.emails.send({
@@ -45,12 +45,16 @@ export async function sendContactNotification(data: ContactFormData) {
                   <div class="label">Email:</div>
                   <div class="value"><a href="mailto:${data.email}">${data.email}</a></div>
                 </div>
-                ${data.company ? `
+                ${
+                  data.company
+                    ? `
                 <div class="field">
                   <div class="label">Company:</div>
                   <div class="value">${data.company}</div>
                 </div>
-                ` : ''}
+                `
+                    : ""
+                }
                 <div class="field">
                   <div class="label">Industry:</div>
                   <div class="value">${data.industry}</div>
@@ -61,7 +65,7 @@ export async function sendContactNotification(data: ContactFormData) {
                 </div>
                 <div class="field">
                   <div class="label">Message:</div>
-                  <div class="value">${data.message.replace(/\n/g, '<br>')}</div>
+                  <div class="value">${data.message.replace(/\n/g, "<br>")}</div>
                 </div>
               </div>
             </div>
@@ -71,13 +75,13 @@ export async function sendContactNotification(data: ContactFormData) {
     });
 
     if (error) {
-      console.error('Resend error:', error);
+      console.error("Resend error:", error);
       throw error;
     }
 
     return emailData;
   } catch (error) {
-    console.error('Failed to send email:', error);
+    console.error("Failed to send email:", error);
     throw error;
   }
 }
