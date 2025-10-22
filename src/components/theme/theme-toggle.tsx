@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useTheme } from 'next-themes';
-import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
+import type * as React from "react";
+import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -17,7 +17,7 @@ export function ThemeToggle() {
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         aria-label="Toggle theme"
       >
         <SunIcon className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -39,6 +39,7 @@ function SunIcon(props: React.SVGProps<SVGSVGElement>) {
       strokeLinejoin="round"
       {...props}
     >
+      <title>Sun Icon</title>
       <circle cx="12" cy="12" r="5" />
       <line x1="12" y1="1" x2="12" y2="3" />
       <line x1="12" y1="21" x2="12" y2="23" />
@@ -64,6 +65,7 @@ function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
       strokeLinejoin="round"
       {...props}
     >
+      <title>Moon Icon</title>
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   );
