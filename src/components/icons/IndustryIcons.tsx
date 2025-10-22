@@ -1,12 +1,12 @@
-import { LucideIcon } from 'lucide-react';
-import { 
-  Fuel as OilBarrel, 
-  Landmark, 
-  Building2, 
-  Sprout, 
-  Radio, 
-  Music 
-} from 'lucide-react';
+import {
+  Building2,
+  Landmark,
+  type LucideIcon,
+  Music,
+  Fuel as OilBarrel,
+  Radio,
+  Sprout,
+} from "lucide-react";
 
 export const industryIcons: Record<string, LucideIcon> = {
   OilBarrel,
