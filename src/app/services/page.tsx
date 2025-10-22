@@ -1,15 +1,17 @@
-import { Metadata } from 'next';
-import  ServiceCard  from '@/components/ServiceCard';
-import  CTA  from '@/components/CTA';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import type { Metadata } from "next";
+
+import CTA from "@/components/CTA";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import ServiceCard from "@/components/ServiceCard";
 
 export const metadata: Metadata = {
-  title: 'Services — Your Agency Name',
-  description: 'Tailored solutions for billion-dollar industries in Nigeria. Web design, UI/UX, custom platforms, branding, and maintenance services.',
+  title: "Services — Your Agency Name",
+  description:
+    "Tailored solutions for billion-dollar industries in Nigeria. Web design, UI/UX, custom platforms, branding, and maintenance services.",
   openGraph: {
-    title: 'Services — Your Agency Name',
-    description: 'Tailored solutions for billion-dollar industries in Nigeria.',
+    title: "Services — Your Agency Name",
+    description: "Tailored solutions for billion-dollar industries in Nigeria.",
   },
 };
 
@@ -21,29 +23,29 @@ interface Service {
 
 const services: Service[] = [
   {
-    title: 'Web Design & Development',
-    desc: 'Custom, responsive websites built with modern frameworks. Scalable solutions that drive growth and user engagement.',
-    href: '/services/web-design-development',
+    title: "Web Design & Development",
+    desc: "Custom, responsive websites built with modern frameworks. Scalable solutions that drive growth and user engagement.",
+    href: "/services/web-design-development",
   },
   {
-    title: 'UI/UX Design',
-    desc: 'User-centered design that delights customers. Research-backed interfaces optimized for conversion and retention.',
-    href: '/services/ui-ux-design',
+    title: "UI/UX Design",
+    desc: "User-centered design that delights customers. Research-backed interfaces optimized for conversion and retention.",
+    href: "/services/ui-ux-design",
   },
   {
-    title: 'Custom Platforms',
-    desc: 'Bespoke web applications and SaaS products. Enterprise-grade solutions tailored to your business processes.',
-    href: '/services/custom-platforms',
+    title: "Custom Platforms",
+    desc: "Bespoke web applications and SaaS products. Enterprise-grade solutions tailored to your business processes.",
+    href: "/services/custom-platforms",
   },
   {
-    title: 'Branding & Strategy',
-    desc: 'Comprehensive brand identity and digital strategy. Position your business for market leadership.',
-    href: '/services/branding-strategy',
+    title: "Branding & Strategy",
+    desc: "Comprehensive brand identity and digital strategy. Position your business for market leadership.",
+    href: "/services/branding-strategy",
   },
   {
-    title: 'Maintenance & Support',
-    desc: 'Ongoing technical support and optimization. Keep your digital assets secure, fast, and up-to-date.',
-    href: '/services/maintenance-support',
+    title: "Maintenance & Support",
+    desc: "Ongoing technical support and optimization. Keep your digital assets secure, fast, and up-to-date.",
+    href: "/services/maintenance-support",
   },
 ];
 
@@ -69,9 +71,9 @@ export default function ServicesPage() {
       <section className="py-16 sm:py-20 lg:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service, idx) => (
+            {services.map((service) => (
               <ServiceCard
-                key={idx}
+                key={service.title}
                 title={service.title}
                 desc={service.desc}
                 href={service.href}

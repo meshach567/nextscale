@@ -1,22 +1,26 @@
-import { Metadata } from 'next';
-import { IndustryCard } from '@/components/IndustryCard';
-import { IndustriesCTA } from '@/components/IndustryCTA';
-import { industries } from '@/data/industries';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import type { Metadata } from "next";
+
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { IndustryCard } from "@/components/IndustryCard";
+import { IndustriesCTA } from "@/components/IndustryCTA";
+import { industries } from "@/data/industries";
 
 export const metadata: Metadata = {
-  title: 'Industries — Build and Launch',
-  description: 'We build investor-ready websites and scalable platforms for Nigeria\'s top industries: oil & gas, banking, real estate, agriculture, telecoms, and entertainment.',
+  title: "Industries — Build and Launch",
+  description:
+    "We build investor-ready websites and scalable platforms for Nigeria's top industries: oil & gas, banking, real estate, agriculture, telecoms, and entertainment.",
   openGraph: {
-    title: 'Industries We Serve — Build and Launch',
-    description: 'Expert digital solutions for Nigeria\'s top industries where billionaires invest.',
-    type: 'website',
+    title: "Industries We Serve — Build and Launch",
+    description:
+      "Expert digital solutions for Nigeria's top industries where billionaires invest.",
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Industries We Serve — Build and Launch',
-    description: 'Expert digital solutions for Nigeria\'s top industries where billionaires invest.',
+    card: "summary_large_image",
+    title: "Industries We Serve — Build and Launch",
+    description:
+      "Expert digital solutions for Nigeria's top industries where billionaires invest.",
   },
 };
 
@@ -32,7 +36,8 @@ export default function Industries() {
               Industries We Serve
             </h1>
             <p className="mt-4 text-lg text-muted-foreground sm:text-xl">
-              Our expertise spans Nigeria's top industries where billionaires invest.
+              Our expertise spans Nigeria's top industries where billionaires
+              invest.
             </p>
           </div>
         </div>
@@ -43,10 +48,7 @@ export default function Industries() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {industries.map((industry) => (
-              <IndustryCard
-                key={industry.slug}
-                {...industry}
-              />
+              <IndustryCard key={industry.slug} {...industry} />
             ))}
           </div>
         </div>

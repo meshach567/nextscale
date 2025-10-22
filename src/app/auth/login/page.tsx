@@ -1,8 +1,8 @@
+import type { Metadata } from "next";
 import { AuthForm } from "@/components/auth/auth-form";
 import { LoginForm } from "@/components/auth/login-form";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Sign In",
