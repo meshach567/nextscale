@@ -1,6 +1,12 @@
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface ServiceCardProps {
   title: string;
@@ -18,16 +24,11 @@ export default function ServiceCard({ title, desc, href }: ServiceCardProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground leading-relaxed">
-            {desc}
-          </p>
+          <p className="text-muted-foreground leading-relaxed">{desc}</p>
         </CardContent>
         <CardFooter>
-          <span 
-            className="inline-flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all"
-            aria-label={`Learn more about ${title}`}
-          >
-            Learn more
+          <span className="inline-flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all">
+            Learn more about {title}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </span>
         </CardFooter>

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { FileText } from 'lucide-react';
+import { FileText } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function IndustriesCTA() {
   return (
@@ -17,12 +17,8 @@ export function IndustriesCTA() {
               Let's make it happen.
             </p>
           </div>
-          <Button 
-            size="lg" 
-            asChild
-            className="shrink-0 gap-2"
-          >
-            <Link 
+          <Button size="lg" asChild className="shrink-0 gap-2">
+            <Link
               href="/contact"
               aria-label="Request a proposal for your industry"
             >

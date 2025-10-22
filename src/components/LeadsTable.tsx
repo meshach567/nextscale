@@ -23,7 +23,7 @@ export default function LeadsTable({ leads }: { leads: Lead[] }) {
     (lead) =>
       lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.company?.toLowerCase().includes(searchTerm.toLowerCase())
+      lead.company?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
