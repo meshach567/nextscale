@@ -14,7 +14,14 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
-  fallback: ["ui-monospace", "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", "monospace"],
+  fallback: [
+    "ui-monospace",
+    "SFMono-Regular",
+    "Consolas",
+    "Liberation Mono",
+    "Menlo",
+    "monospace",
+  ],
 });
 
 export const metadata: Metadata = {
