@@ -1,26 +1,21 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ContactFormData, contactSchema } from '../lib/utils/validation';
-import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { type ContactFormData, contactSchema } from "../lib/utils/validation";
 
 const industries = [
-  'Oil & Gas',
-  'Banking/Fintech',
-  'Real Estate',
-  'Agriculture',
-  'Telecoms',
-  'Entertainment'
+  "Oil & Gas",
+  "Banking/Fintech",
+  "Real Estate",
+  "Agriculture",
+  "Telecoms",
+  "Entertainment",
 ] as const;
 
-const projectTypes = [
-  'Website',
-  'Dashboard',
-  'Mobile App',
-  'Other'
-] as const;
+const projectTypes = ["Website", "Dashboard", "Mobile App", "Other"] as const;
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +26,7 @@ export default function ContactForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors }
+    formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   });
@@ -42,10 +37,10 @@ export default function ContactForm() {
     setSubmitSuccess(false);
 
     try {
-      const response = await fetch('/api/submit', {
-        method: 'POST',
+      const response = await fetch("/api/submit", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
@@ -53,7 +48,7 @@ export default function ContactForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Something went wrong');
+        throw new Error(result.error || "Something went wrong");
       }
 
       setSubmitSuccess(true);
@@ -62,8 +57,12 @@ export default function ContactForm() {
       // Hide success message after 10 seconds
       setTimeout(() => setSubmitSuccess(false), 10000);
     } catch (error) {
-      console.error('Form submission error:', error);
-      setSubmitError(error instanceof Error ? error.message : 'Failed to submit form. Please try again.');
+      console.error("Form submission error:", error);
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Failed to submit form. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -71,7 +70,9 @@ export default function ContactForm() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
-      <h2 className="text-2xl font-semibold text-slate-900 mb-6">Send us a message</h2>
+      <h2 className="text-2xl font-semibold text-slate-900 mb-6">
+        Send us a message
+      </h2>
 
       {submitSuccess && (
         <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
@@ -97,22 +98,25 @@ export default function ContactForm() {
         {/* Honeypot field - hidden from users */}
         <input
           type="text"
-          {...register('website')}
-          style={{ position: 'absolute', left: '-9999px' }}
+          {...register("website")}
+          style={{ position: "absolute", left: "-9999px" }}
           tabIndex={-1}
           autoComplete="off"
         />
 
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1.5">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-slate-700 mb-1.5"
+          >
             Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             id="name"
-            {...register('name')}
+            {...register("name")}
             className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-              errors.name ? 'border-red-300' : 'border-slate-300'
+              errors.name ? "border-red-300" : "border-slate-300"
             }`}
             placeholder="John Doe"
           />
@@ -125,15 +129,18 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-slate-700 mb-1.5"
+          >
             Email <span className="text-red-500">*</span>
           </label>
           <input
             type="email"
             id="email"
-            {...register('email')}
+            {...register("email")}
             className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-              errors.email ? 'border-red-300' : 'border-slate-300'
+              errors.email ? "border-red-300" : "border-slate-300"
             }`}
             placeholder="john@example.com"
           />
@@ -146,27 +153,33 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-1.5">
+          <label
+            htmlFor="company"
+            className="block text-sm font-medium text-slate-700 mb-1.5"
+          >
             Company
           </label>
           <input
             type="text"
             id="company"
-            {...register('company')}
+            {...register("company")}
             className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             placeholder="Acme Inc."
           />
         </div>
 
         <div>
-          <label htmlFor="industry" className="block text-sm font-medium text-slate-700 mb-1.5">
+          <label
+            htmlFor="industry"
+            className="block text-sm font-medium text-slate-700 mb-1.5"
+          >
             Industry <span className="text-red-500">*</span>
           </label>
           <select
             id="industry"
-            {...register('industry')}
+            {...register("industry")}
             className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-              errors.industry ? 'border-red-300' : 'border-slate-300'
+              errors.industry ? "border-red-300" : "border-slate-300"
             }`}
           >
             <option value="">Select an industry</option>
@@ -185,14 +198,17 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="projectType" className="block text-sm font-medium text-slate-700 mb-1.5">
+          <label
+            htmlFor="projectType"
+            className="block text-sm font-medium text-slate-700 mb-1.5"
+          >
             Project Type <span className="text-red-500">*</span>
           </label>
           <select
             id="projectType"
-            {...register('projectType')}
+            {...register("projectType")}
             className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-              errors.projectType ? 'border-red-300' : 'border-slate-300'
+              errors.projectType ? "border-red-300" : "border-slate-300"
             }`}
           >
             <option value="">Select a project type</option>
@@ -211,15 +227,18 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1.5">
+          <label
+            htmlFor="message"
+            className="block text-sm font-medium text-slate-700 mb-1.5"
+          >
             Message <span className="text-red-500">*</span>
           </label>
           <textarea
             id="message"
-            {...register('message')}
+            {...register("message")}
             rows={5}
             className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none ${
-              errors.message ? 'border-red-300' : 'border-slate-300'
+              errors.message ? "border-red-300" : "border-slate-300"
             }`}
             placeholder="Tell us about your project..."
           />
@@ -236,7 +255,7 @@ export default function ContactForm() {
           disabled={isSubmitting}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {isSubmitting ? "Sending..." : "Send Message"}
         </button>
       </form>
     </div>
