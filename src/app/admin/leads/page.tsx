@@ -1,16 +1,15 @@
 // ============================================
 // FILE: app/admin/leads/page.tsx
 // ============================================
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { supabaseAdmin } from '@/lib/supabaseClient';
-import LeadsTable from '@/components/LeadsTable';
-import AdminLogin from '@/components/AdminLogin';
+import { cookies } from "next/headers";
 
+import AdminLogin from "@/components/AdminLogin";
+import LeadsTable from "@/components/LeadsTable";
+import { createAdminClient } from "@/utils/supabase/client";
 
 async function checkAuth() {
   const cookieStore = await cookies();
-  const authCookie = cookieStore.get('admin_auth');
+  const authCookie = cookieStore.get("admin_auth");
   return authCookie?.value === process.env.ADMIN_PASSWORD;
 }
 
@@ -22,14 +21,16 @@ export default async function AdminLeadsPage() {
   }
 
   // Fetch leads from Supabase
+  const supabaseAdmin = createAdminClient();
+
   const { data: leads, error } = await supabaseAdmin
-    .from('leads')
-    .select('*')
-    .order('created_at', { ascending: false })
+    .from("leads")
+    .select("*")
+    .order("created_at", { ascending: false })
     .limit(100);
 
   if (error) {
-    console.error('Error fetching leads:', error);
+    console.error("Error fetching leads:", error);
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-red-600">Error loading leads</p>
