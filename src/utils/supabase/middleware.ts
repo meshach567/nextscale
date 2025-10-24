@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
-import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -12,32 +12,34 @@ export async function updateSession(request: NextRequest) {
 
   if (!supabaseUrl || !supabaseAnonKey) {
     // If env vars are missing, return the next response without attempting to create a client
-    console.warn(
-      "Supabase env vars missing in middleware: skipping updateSession",
-    );
+    console.warn("Supabase env vars missing in middleware: skipping updateSession");
     return supabaseResponse;
   }
 
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: {
-      getAll() {
-        return request.cookies.getAll();
-      },
-      setAll(cookiesToSet) {
-        // Apply cookie updates to the incoming request's cookie store
-        cookiesToSet.forEach(({ name, value }) => {
-          request.cookies.set(name, value);
-        });
+  const supabase = createServerClient(
+    supabaseUrl,
+    supabaseAnonKey,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          // Apply cookie updates to the incoming request's cookie store
+          cookiesToSet.forEach(({ name, value }) => {
+            request.cookies.set(name, value);
+          });
 
-        // Recreate the response so the new cookies can be attached
-        supabaseResponse = NextResponse.next({ request });
+          // Recreate the response so the new cookies can be attached
+          supabaseResponse = NextResponse.next({ request });
 
-        cookiesToSet.forEach(({ name, value, options }) => {
-          supabaseResponse.cookies.set(name, value, options);
-        });
+          cookiesToSet.forEach(({ name, value, options }) => {
+            supabaseResponse.cookies.set(name, value, options);
+          });
+        },
       },
     },
-  });
+  );
 
   const {
     data: { user },

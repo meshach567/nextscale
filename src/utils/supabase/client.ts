@@ -7,9 +7,7 @@ const supabaseServiceRole = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 
 export const createClient = () => {
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn(
-      "Supabase public env vars missing: createClient will use empty config",
-    );
+    console.warn("Supabase public env vars missing: createClient will use empty config");
   }
 
   return createBrowserClient(supabaseUrl, supabaseAnonKey);
@@ -17,9 +15,7 @@ export const createClient = () => {
 
 export const createAdminClient = () => {
   if (!supabaseUrl || !supabaseServiceRole) {
-    console.warn(
-      "Supabase admin env vars missing: createAdminClient will use empty config",
-    );
+    console.warn("Supabase admin env vars missing: createAdminClient will use empty config");
   }
 
   return createNewClient(supabaseUrl, supabaseServiceRole, {
