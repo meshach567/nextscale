@@ -1,10 +1,9 @@
 // ============================================
 // FILE: app/admin/leads/page.tsx
 // ============================================
-import { cookies } from "next/headers";
-
 import AdminLogin from "@/components/AdminLogin";
 import LeadsTable from "@/components/LeadsTable";
+import { cookies } from "next/headers";
 import { createAdminClient } from "@/utils/supabase/client";
 
 async function checkAuth() {
