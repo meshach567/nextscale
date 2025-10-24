@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import { IndustryCard } from "@/components/IndustryCard";
 import { IndustriesCTA } from "@/components/IndustryCTA";
 import { industries } from "@/data/industries";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Industries — Build and Launch",

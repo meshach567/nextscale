@@ -1,7 +1,7 @@
 "use client";
 
-import { Calendar } from "lucide-react";
 import { useState } from "react";
+import { Calendar } from "lucide-react";
 
 export default function BookACall() {
   const [showCalendly, setShowCalendly] = useState(false);
