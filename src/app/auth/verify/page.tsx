@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
-
 import { AuthForm } from "@/components/auth/auth-form";
 import { VerifyForm } from "@/components/auth/verify-form";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Verification Code",
