@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { type ContactFormData, contactSchema } from "../lib/utils/validation";
+import { type ContactFormData, contactSchema } from "../utils/validation";
 
 const industries = [
   "Oil & Gas",
