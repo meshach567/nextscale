@@ -98,7 +98,7 @@ const Header = () => {
             </button>
 
             <Button asChild size="sm" className="hidden md:inline-flex">
-              <Link href="/auth/signup">Get Started</Link>
+              <Link href="/auth">Get Started</Link>
             </Button>
           </div>
         </nav>
@@ -195,7 +195,7 @@ const Header = () => {
           </ul>
           <div className="mt-auto pt-4">
             <Button asChild className="w-full h-11 text-base">
-              <Link href="/contact" onClick={() => setOpen(false)}>
+              <Link href="/auth" onClick={() => setOpen(false)}>
                 Get Started
               </Link>
             </Button>
