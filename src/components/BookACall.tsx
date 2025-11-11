@@ -27,7 +27,7 @@ export default function BookACall() {
         </button>
       ) : (
         <div className="bg-white rounded-lg overflow-hidden border border-slate-200">
-          <div className="relative w-full" style={{ paddingBottom: "800px" }}>
+          <div className="relative w-full pb-[800px]">
             <iframe
               src={calendlyUrl}
               width="100%"
