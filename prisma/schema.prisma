@@ -73,3 +73,15 @@ model Verification {
 
   @@map("verification")
 }
+
+model Message {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  company     String? 
+  industry    String?
+  projectType String?
+  message     String   @db.Text
+  createdAt   DateTime @default(now())
+}
+
