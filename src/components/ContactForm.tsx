@@ -4,7 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { type ContactFormData, contactSchema } from "../utils/validation";
+import { ContactInput, contactSchema } from "../utils/validation";
+import SuccessModal from "./SuccessModal";
+//import { sendTestEmailAction } from '@/server/test-email.action'
 
 const industries = [
   "Oil & Gas",
@@ -18,55 +20,78 @@ const industries = [
 const projectTypes = ["Website", "Dashboard", "Mobile App", "Other"] as const;
 
 export default function ContactForm() {
+  const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ContactFormData>({
+  } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true);
-    setSubmitError(null);
-    setSubmitSuccess(false);
+  // const onSubmit = async (data: ContactFormData) => {
+  //   setIsSubmitting(true);
+  //   setSubmitError(null);
+  //   setSubmitSuccess(false);
 
+  //   try {
+  //     const response = await fetch("/api/contact", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     const result = await response.json();
+
+  //     if (result.success) {
+  //       throw new Error(result.error || "Something went wrong");
+  //     }
+
+  //     setSubmitSuccess(true);
+  //     reset();
+
+  //     // Hide success message after 10 seconds
+  //     setTimeout(() => setSubmitSuccess(false), 10000);
+  //   } catch (error) {
+  //     console.error("Form submission error:", error);
+  //     setSubmitError(
+  //       error instanceof Error
+  //         ? error.message
+  //         : "Failed to submit form. Please try again.",
+  //     );
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  async function onSubmit(values: ContactInput) {
+    setErrorMsg(null);
     try {
-      const response = await fetch("/api/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
       });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Something went wrong");
+      const json = await res.json();
+      if (!res.ok) {
+        setErrorMsg(json?.error || "Submission failed");
+      } else {
+        reset();
+        setOpen(true);
       }
-
-      setSubmitSuccess(true);
-      reset();
-
-      // Hide success message after 10 seconds
-      setTimeout(() => setSubmitSuccess(false), 10000);
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "Failed to submit form. Please try again.",
-      );
-    } finally {
-      setIsSubmitting(false);
+    } catch (err) {
+      console.error(err);
+      setErrorMsg("Network error");
     }
-  };
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
@@ -98,7 +123,7 @@ export default function ContactForm() {
         {/* Honeypot field - hidden from users */}
         <input
           type="text"
-          {...register("website")}
+          {...register("projectType")}
           style={{ position: "absolute", left: "-9999px" }}
           tabIndex={-1}
           autoComplete="off"
@@ -258,6 +283,7 @@ export default function ContactForm() {
           {isSubmitting ? "Sending..." : "Send Message"}
         </button>
       </form>
+      <SuccessModal open={open} onOpenChange={setOpen} />
     </div>
   );
 }
