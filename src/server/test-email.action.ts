@@ -9,7 +9,9 @@ export const sendTestEmailAction = async ({name}: {name: string}) => {
     to: 'recipient@mail.com',
     subject: 'Test Email',
     component: createElement(TestEmail,{
-        name: name
+        name: name,
+        email: 'recipient@mail.com',
+        message: 'This is a test email sent from sendTestEmailAction.',
     }),
   });
 };
