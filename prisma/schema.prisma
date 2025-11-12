@@ -15,44 +15,51 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
   image         String?
+  role          String    @default("user")
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
+  updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
 
-  @@unique([email])
   @@map("user")
 }
 
 model Session {
-  id        String   @id
-  expiresAt DateTime
-  token     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ipAddress String?
-  userAgent String?
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String   @id @default(cuid())
+  // sessionToken must be unique and must exist for sessions.
+  // Made optional initially to handle existing rows, will be populated via migration
+  sessionToken  String?  @default(cuid()) @unique
+  expiresAt     DateTime
+  token         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  ipAddress     String?
+  userAgent     String?
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
+  @@unique([userId])
   @@map("session")
 }
 
 model Account {
-  id                    String    @id
-  accountId             String
-  providerId            String
+  id                    String    @id @default(cuid())
   userId                String
+  type                  String?
+  provider              String?
+  providerAccountId     String?
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?
-  refreshToken          String?
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  expiresAt             Int?
+  tokenType             String?
   idToken               String?
+  sessionState          String?
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
   scope                 String?
@@ -60,28 +67,76 @@ model Account {
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 
+  @@unique([provider, providerAccountId])
+  @@index([userId])
   @@map("account")
 }
 
 model Verification {
-  id         String   @id
+  id         String   @id @default(cuid())
   identifier String
+  token      String   @unique
   value      String
   expiresAt  DateTime
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  updatedAt  DateTime @updatedAt
 
   @@map("verification")
 }
 
+model PageVisit {
+  id        String   @id @default(cuid())
+  page      String
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([page])
+  @@index([createdAt])
+  @@map("PageVisit")
+}
+
 model Message {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   name        String
   email       String
-  company     String? 
+  company     String?
   industry    String?
   projectType String?
   message     String   @db.Text
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("message")
 }
 
+model Lead {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  company     String?
+  industry    String
+  projectType String
+  message     String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  @@index([email])
+  @@index([industry])
+  @@index([projectType])
+  @@index([createdAt])
+  @@map("Lead")
+}
+
+model Analytics {
+  id            String   @id @default(cuid())
+  page          String
+  visits        Int      @default(0)
+  serviceClicks Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([page])
+  @@index([createdAt])
+  @@map("analytics")
+}
