@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     })
 
     // Render email HTML using React Email component
-    const html = render(<ContactEmail name={data.name} email={data.email} message={data.message} />)
+    const html = await render(<ContactEmail name={data.name} email={data.email} message={data.message} />)
 
     // Send email via nodemailer
     const transporter = nodemailer.createTransport({

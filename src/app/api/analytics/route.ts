@@ -1,15 +1,13 @@
 import { NextResponse } from 'next/server'
-import prisma  from '@/lib/prisma'
-
-const prismaAny = prisma as any
+import prisma from '@/lib/prisma'
 
 export async function GET() {
   try {
     // Get total leads
-    const totalLeads = await prismaAny.lead.count()
+    const totalLeads = await prisma.lead.count()
 
     // Get leads by industry
-    const leadsByIndustry: Array<{ industry: string | null; _count: { id: number } }> = await prismaAny.lead.groupBy({
+    const leadsByIndustry = await prisma.lead.groupBy({
       by: ['industry'],
       _count: {
         id: true,
@@ -22,7 +20,7 @@ export async function GET() {
     })
 
     // Get leads by project type
-    const leadsByProjectType: Array<{ projectType: string | null; _count: { id: number } }> = await prismaAny.lead.groupBy({
+    const leadsByProjectType = await prisma.lead.groupBy({
       by: ['projectType'],
       _count: {
         id: true,
@@ -38,23 +36,25 @@ export async function GET() {
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
 
-    const leadsOverTime = await prismaAny.$queryRaw<Array<{
+    // Use raw SQL to get leads over time grouped by date
+    // Column names are camelCase as defined in the migration
+    const leadsOverTime = await prisma.$queryRaw<Array<{
       date: Date
       count: bigint
     }>>`
       SELECT 
-        DATE(created_at) as date,
+        DATE("createdAt") as date,
         COUNT(*)::bigint as count
       FROM "Lead"
-      WHERE created_at >= ${thirtyDaysAgo}
-      GROUP BY DATE(created_at)
+      WHERE "createdAt" >= ${thirtyDaysAgo}
+      GROUP BY DATE("createdAt")
       ORDER BY date ASC
     `
 
     // Get recent leads (last 7 days)
     const sevenDaysAgo = new Date()
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-    const recentLeads = await prismaAny.lead.count({
+    const recentLeads = await prisma.lead.count({
       where: {
         createdAt: {
           gte: sevenDaysAgo,
@@ -65,7 +65,7 @@ export async function GET() {
     // Calculate growth rate
     const fourteenDaysAgo = new Date()
     fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14)
-    const previousWeekLeads = await prismaAny.lead.count({
+    const previousWeekLeads = await prisma.lead.count({
       where: {
         createdAt: {
           gte: fourteenDaysAgo,
@@ -90,8 +90,10 @@ export async function GET() {
         projectType: item.projectType || 'Unknown',
         count: item._count.id,
       })),
-      leadsOverTime: leadsOverTime.map((item: { date: Date; count: bigint }) => ({
-        date: item.date.toISOString().split('T')[0],
+      leadsOverTime: leadsOverTime.map(item => ({
+        date: item.date instanceof Date 
+          ? item.date.toISOString().split('T')[0]
+          : new Date(item.date).toISOString().split('T')[0],
         count: Number(item.count),
       })),
     })
