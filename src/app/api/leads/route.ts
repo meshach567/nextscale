@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import prisma  from '@/lib/prisma'
+import prisma from '@/lib/prisma'
+import { Prisma } from '@/generated/prisma/client'
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,7 +14,7 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit
 
-    const where: any = {}
+    const where: Prisma.LeadWhereInput = {}
 
     if (search) {
       where.OR = [
@@ -64,11 +65,21 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, industry, projectType, message } = body
+    const { name, email, company, industry, projectType, message } = body
 
-    if (!name || !email || !message) {
+    // Validate required fields based on schema
+    if (!name || !email || !industry || !projectType || !message) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields: name, email, industry, projectType, and message are required' },
+        { status: 400 }
+      )
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
         { status: 400 }
       )
     }
@@ -77,6 +88,7 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         email,
+        company: company || null,
         industry,
         projectType,
         message,
@@ -86,6 +98,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(lead, { status: 201 })
   } catch (error) {
     console.error('Error creating lead:', error)
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        return NextResponse.json(
+          { error: 'A lead with this email already exists' },
+          { status: 409 }
+        )
+      }
+    }
     return NextResponse.json(
       { error: 'Failed to create lead' },
       { status: 500 }
