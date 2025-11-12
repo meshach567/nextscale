@@ -1,7 +1,7 @@
-import type { ContactFormData } from "@/utils/validation";
+import  { ContactInput} from '@/utils/validation';
 import { sendContactEmail } from "@/lib/smtp";
 
-export async function sendContactNotification(data: ContactFormData) {
+export async function sendContactNotification(data: ContactInput) {
   // shim to keep existing code paths working - send via SMTP
   try {
     const info = await sendContactEmail({
