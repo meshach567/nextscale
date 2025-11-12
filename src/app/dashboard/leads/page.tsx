@@ -1,112 +1,127 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Header } from '@/components/dashboard/Header'
-import { LeadsTable } from '@/components/dashboard/LeadsTable'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { useState } from "react";
+import { Header } from "@/components/dashboard/Header";
+import { LeadsTable } from "@/components/dashboard/LeadsTable";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { useFilterStore } from '@/lib/zustand-store'
-import { Search, Filter, X, Calendar, Download, RefreshCw } from 'lucide-react'
-import { useLeads } from '@/hooks/useLeads'
+} from "@/components/ui/select";
+import { useFilterStore } from "@/lib/zustand-store";
+import { Search, Filter, X, Calendar, Download, RefreshCw } from "lucide-react";
+import { useLeads } from "@/hooks/useLeads";
 
 const industries = [
-  'Technology',
-  'Healthcare',
-  'Finance',
-  'E-commerce',
-  'Education',
-  'Real Estate',
-  'Manufacturing',
-  'Other',
-]
+  "Technology",
+  "Healthcare",
+  "Finance",
+  "E-commerce",
+  "Education",
+  "Real Estate",
+  "Manufacturing",
+  "Other",
+];
 
 const projectTypes = [
-  'Web Development',
-  'Mobile App',
-  'Dashboard',
-  'E-commerce',
-  'Learning Platform',
-  'Custom Software',
-  'Consulting',
-  'Other',
-]
+  "Web Development",
+  "Mobile App",
+  "Dashboard",
+  "E-commerce",
+  "Learning Platform",
+  "Custom Software",
+  "Consulting",
+  "Other",
+];
 
 export default function LeadsPage() {
-  const { 
-    searchQuery, 
+  const {
+    searchQuery,
     industryFilter,
     dateRange,
-    setSearchQuery, 
+    setSearchQuery,
     setIndustryFilter,
     setDateRange,
-    resetFilters 
-  } = useFilterStore()
+    resetFilters,
+  } = useFilterStore();
 
-  const [projectTypeFilter, setProjectTypeFilter] = useState('all')
-  const [page, setPage] = useState(1)
-  const [showDatePicker, setShowDatePicker] = useState(false)
+  const [projectTypeFilter, setProjectTypeFilter] = useState("all");
+  const [page, setPage] = useState(1);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   // Fetch leads with current filters
   const { data, isLoading, refetch } = useLeads({
     search: searchQuery,
-    industry: industryFilter === 'all' ? undefined : industryFilter,
+    industry: industryFilter === "all" ? undefined : industryFilter,
     from: dateRange.from,
     to: dateRange.to,
     page,
     limit: 10,
-  })
+  });
 
-  const hasActiveFilters = searchQuery || industryFilter !== 'all' || projectTypeFilter !== 'all' || dateRange.from || dateRange.to
+  const hasActiveFilters =
+    searchQuery ||
+    industryFilter !== "all" ||
+    projectTypeFilter !== "all" ||
+    dateRange.from ||
+    dateRange.to;
 
   const handleExportCSV = () => {
     if (!data?.leads || data.leads.length === 0) {
-      alert('No data to export')
-      return
+      alert("No data to export");
+      return;
     }
 
     // Prepare CSV data
-    const headers = ['Name', 'Email', 'Industry', 'Project Type', 'Message', 'Date']
-    const rows = data.leads.map(lead => [
+    const headers = [
+      "Name",
+      "Email",
+      "Industry",
+      "Project Type",
+      "Message",
+      "Date",
+    ];
+    const rows = data.leads.map((lead) => [
       lead.name,
       lead.email,
-      lead.industry || 'N/A',
-      lead.projectType || 'N/A',
+      lead.industry || "N/A",
+      lead.projectType || "N/A",
       `"${lead.message.replace(/"/g, '""')}"`, // Escape quotes in message
       new Date(lead.createdAt).toLocaleString(),
-    ])
+    ]);
 
     const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.join(','))
-    ].join('\n')
+      headers.join(","),
+      ...rows.map((row) => row.join(",")),
+    ].join("\n");
 
     // Download file
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const link = document.createElement('a')
-    const url = URL.createObjectURL(blob)
-    link.setAttribute('href', url)
-    link.setAttribute('download', `leads-export-${new Date().toISOString().split('T')[0]}.csv`)
-    link.style.visibility = 'hidden'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute(
+      "download",
+      `leads-export-${new Date().toISOString().split("T")[0]}.csv`,
+    );
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handleResetAllFilters = () => {
-    resetFilters()
-    setProjectTypeFilter('all')
-    setPage(1)
-  }
+    resetFilters();
+    setProjectTypeFilter("all");
+    setPage(1);
+  };
 
-  const totalLeads = data?.pagination.total || 0
-  const filteredLeads = data?.leads.length || 0
+  const totalLeads = data?.pagination.total || 0;
+  const filteredLeads = data?.leads.length || 0;
 
   return (
     <div>
@@ -116,11 +131,15 @@ export default function LeadsPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <p className="text-sm text-gray-600">Total Leads</p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">{totalLeads}</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">
+              {totalLeads}
+            </p>
           </div>
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <p className="text-sm text-gray-600">Showing</p>
-            <p className="text-2xl font-bold text-blue-600 mt-1">{filteredLeads}</p>
+            <p className="text-2xl font-bold text-blue-600 mt-1">
+              {filteredLeads}
+            </p>
           </div>
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <p className="text-sm text-gray-600">Current Page</p>
@@ -128,7 +147,9 @@ export default function LeadsPage() {
           </div>
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <p className="text-sm text-gray-600">Total Pages</p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">{data?.pagination.totalPages || 0}</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">
+              {data?.pagination.totalPages || 0}
+            </p>
           </div>
         </div>
 
@@ -147,7 +168,9 @@ export default function LeadsPage() {
                 className="gap-2"
                 disabled={isLoading}
               >
-                <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+                <RefreshCw
+                  className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`}
+                />
                 Refresh
               </Button>
               <Button
@@ -171,8 +194,8 @@ export default function LeadsPage() {
                 placeholder="Search by name, email, or message content..."
                 value={searchQuery}
                 onChange={(e) => {
-                  setSearchQuery(e.target.value)
-                  setPage(1) // Reset to first page on search
+                  setSearchQuery(e.target.value);
+                  setPage(1); // Reset to first page on search
                 }}
                 className="pl-10"
               />
@@ -182,14 +205,17 @@ export default function LeadsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Industry Filter */}
               <div>
-                <label htmlFor="industry-select" className="text-sm font-medium text-gray-700 mb-2 block">
+                <label
+                  htmlFor="industry-select"
+                  className="text-sm font-medium text-gray-700 mb-2 block"
+                >
                   Industry
                 </label>
-                <Select 
-                  value={industryFilter} 
+                <Select
+                  value={industryFilter}
                   onValueChange={(value) => {
-                    setIndustryFilter(value)
-                    setPage(1)
+                    setIndustryFilter(value);
+                    setPage(1);
                   }}
                 >
                   <SelectTrigger id="industry-select">
@@ -208,14 +234,17 @@ export default function LeadsPage() {
 
               {/* Project Type Filter */}
               <div>
-                <label htmlFor="projectType-select" className="text-sm font-medium text-gray-700 mb-2 block">
+                <label
+                  htmlFor="projectType-select"
+                  className="text-sm font-medium text-gray-700 mb-2 block"
+                >
                   Project Type
                 </label>
-                <Select 
-                  value={projectTypeFilter} 
+                <Select
+                  value={projectTypeFilter}
                   onValueChange={(value) => {
-                    setProjectTypeFilter(value)
-                    setPage(1)
+                    setProjectTypeFilter(value);
+                    setPage(1);
                   }}
                 >
                   <SelectTrigger id="projectType-select">
@@ -234,7 +263,10 @@ export default function LeadsPage() {
 
               {/* Date Range */}
               <div>
-                <label htmlFor="from-date" className="text-sm font-medium text-gray-700 mb-2 block">
+                <label
+                  htmlFor="from-date"
+                  className="text-sm font-medium text-gray-700 mb-2 block"
+                >
                   Date Range
                 </label>
                 <Button
@@ -245,7 +277,7 @@ export default function LeadsPage() {
                   <Calendar className="w-4 h-4" />
                   {dateRange.from && dateRange.to
                     ? `${dateRange.from.toLocaleDateString()} - ${dateRange.to.toLocaleDateString()}`
-                    : 'Select date range'}
+                    : "Select date range"}
                 </Button>
               </div>
             </div>
@@ -255,32 +287,42 @@ export default function LeadsPage() {
               <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="from-date" className="text-sm font-medium text-gray-700 mb-2 block">
+                    <label
+                      htmlFor="from-date"
+                      className="text-sm font-medium text-gray-700 mb-2 block"
+                    >
                       From Date
                     </label>
                     <Input
                       id="from-date"
                       type="date"
-                      value={dateRange.from?.toISOString().split('T')[0] || ''}
+                      value={dateRange.from?.toISOString().split("T")[0] || ""}
                       onChange={(e) => {
-                        const date = e.target.value ? new Date(e.target.value) : null
-                        setDateRange(date, dateRange.to)
-                        setPage(1)
+                        const date = e.target.value
+                          ? new Date(e.target.value)
+                          : null;
+                        setDateRange(date, dateRange.to);
+                        setPage(1);
                       }}
                     />
                   </div>
                   <div>
-                    <label htmlFor="to-date" className="text-sm font-medium text-gray-700 mb-2 block">
+                    <label
+                      htmlFor="to-date"
+                      className="text-sm font-medium text-gray-700 mb-2 block"
+                    >
                       To Date
                     </label>
                     <Input
                       id="to-date"
                       type="date"
-                      value={dateRange.to?.toISOString().split('T')[0] || ''}
+                      value={dateRange.to?.toISOString().split("T")[0] || ""}
                       onChange={(e) => {
-                        const date = e.target.value ? new Date(e.target.value) : null
-                        setDateRange(dateRange.from, date)
-                        setPage(1)
+                        const date = e.target.value
+                          ? new Date(e.target.value)
+                          : null;
+                        setDateRange(dateRange.from, date);
+                        setPage(1);
                       }}
                     />
                   </div>
@@ -297,12 +339,12 @@ export default function LeadsPage() {
                       Search: "{searchQuery}"
                     </span>
                   )}
-                  {industryFilter !== 'all' && (
+                  {industryFilter !== "all" && (
                     <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full">
                       Industry: {industryFilter}
                     </span>
                   )}
-                  {projectTypeFilter !== 'all' && (
+                  {projectTypeFilter !== "all" && (
                     <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
                       Project: {projectTypeFilter}
                     </span>
@@ -330,5 +372,5 @@ export default function LeadsPage() {
         <LeadsTable />
       </div>
     </div>
-  )
+  );
 }

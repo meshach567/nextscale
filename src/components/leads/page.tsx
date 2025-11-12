@@ -1,40 +1,40 @@
-'use client'
+"use client";
 
-import { Header } from '@/components/dashboard/Header'
-import { LeadsTable } from '@/components/dashboard/LeadsTable'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Header } from "@/components/dashboard/Header";
+import { LeadsTable } from "@/components/dashboard/LeadsTable";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { useFilterStore } from '@/lib/zustand-store'
-import { Search, Filter, X } from 'lucide-react'
+} from "@/components/ui/select";
+import { useFilterStore } from "@/lib/zustand-store";
+import { Search, Filter, X } from "lucide-react";
 
 const industries = [
-  'Technology',
-  'Healthcare',
-  'Finance',
-  'E-commerce',
-  'Education',
-  'Real Estate',
-  'Manufacturing',
-  'Other',
-]
+  "Technology",
+  "Healthcare",
+  "Finance",
+  "E-commerce",
+  "Education",
+  "Real Estate",
+  "Manufacturing",
+  "Other",
+];
 
 export default function LeadsPage() {
-  const { 
-    searchQuery, 
-    industryFilter, 
-    setSearchQuery, 
-    setIndustryFilter, 
-    resetFilters 
-  } = useFilterStore()
+  const {
+    searchQuery,
+    industryFilter,
+    setSearchQuery,
+    setIndustryFilter,
+    resetFilters,
+  } = useFilterStore();
 
-  const hasActiveFilters = searchQuery || industryFilter !== 'all'
+  const hasActiveFilters = searchQuery || industryFilter !== "all";
 
   return (
     <div>
@@ -88,5 +88,5 @@ export default function LeadsPage() {
         <LeadsTable />
       </div>
     </div>
-  )
+  );
 }

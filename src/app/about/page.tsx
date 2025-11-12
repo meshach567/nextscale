@@ -117,7 +117,7 @@ function CTAButtons() {
 export default function About() {
   return (
     <>
-  {/* JSON-LD Structured Data (static and controlled content - safe to inject) */}
+      {/* JSON-LD Structured Data (static and controlled content - safe to inject) */}
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",

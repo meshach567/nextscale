@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { format } from 'date-fns'
-import { Header } from '@/components/dashboard/Header'
-import { useLeads } from '@/hooks/useLeads'
-import { Button } from '@/components/ui/button'
-import { Mail, User, Building2, Briefcase } from 'lucide-react'
+import { useState } from "react";
+import { format } from "date-fns";
+import { Header } from "@/components/dashboard/Header";
+import { useLeads } from "@/hooks/useLeads";
+import { Button } from "@/components/ui/button";
+import { Mail, User, Building2, Briefcase } from "lucide-react";
 
 export default function MessagesPage() {
-  const [page, setPage] = useState(1)
-  const { data, isLoading, error } = useLeads({ page, limit: 20 })
+  const [page, setPage] = useState(1);
+  const { data, isLoading, error } = useLeads({ page, limit: 20 });
 
   if (isLoading) {
     return (
@@ -19,7 +19,7 @@ export default function MessagesPage() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -30,10 +30,13 @@ export default function MessagesPage() {
           <p className="text-red-600">Error loading messages</p>
         </div>
       </div>
-    )
+    );
   }
 
-  const { leads, pagination } = data || { leads: [], pagination: { page: 1, totalPages: 1 } }
+  const { leads, pagination } = data || {
+    leads: [],
+    pagination: { page: 1, totalPages: 1 },
+  };
 
   return (
     <div>
@@ -58,12 +61,14 @@ export default function MessagesPage() {
                       <User className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{lead.name}</h3>
+                      <h3 className="font-semibold text-gray-900">
+                        {lead.name}
+                      </h3>
                       <p className="text-sm text-gray-500">{lead.email}</p>
                     </div>
                   </div>
                   <span className="text-sm text-gray-500">
-                    {format(new Date(lead.createdAt), 'MMM dd, yyyy · h:mm a')}
+                    {format(new Date(lead.createdAt), "MMM dd, yyyy · h:mm a")}
                   </span>
                 </div>
 
@@ -122,5 +127,5 @@ export default function MessagesPage() {
         )}
       </div>
     </div>
-  )
+  );
 }

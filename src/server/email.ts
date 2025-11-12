@@ -1,10 +1,10 @@
 "server-only";
 
-import { ADMIN_EMAIL } from '../lib/consts.server';
-import { render } from '@react-email/components';
-import nodemailer, { Transporter } from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import { ReactElement } from 'react';
+import { ADMIN_EMAIL } from "../lib/consts.server";
+import { render } from "@react-email/components";
+import nodemailer, { Transporter } from "nodemailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
+import { ReactElement } from "react";
 
 let transporter: Transporter<SMTPTransport.SentMessageInfo> | null = null;
 

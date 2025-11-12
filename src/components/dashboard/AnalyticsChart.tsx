@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { useAnalytics } from '@/hooks/useAnalytics'
+import { useAnalytics } from "@/hooks/useAnalytics";
 import {
   LineChart,
   Line,
@@ -15,20 +15,27 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts'
-import { TrendingUp, TrendingDown, Users, Clock } from 'lucide-react'
+} from "recharts";
+import { TrendingUp, TrendingDown, Users, Clock } from "lucide-react";
 
-const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#6366f1']
+const COLORS = [
+  "#3b82f6",
+  "#8b5cf6",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#6366f1",
+];
 
 export function AnalyticsChart() {
-  const { data, isLoading, error } = useAnalytics()
+  const { data, isLoading, error } = useAnalytics();
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
       </div>
-    )
+    );
   }
 
   if (error || !data) {
@@ -36,7 +43,7 @@ export function AnalyticsChart() {
       <div className="flex items-center justify-center h-96">
         <p className="text-red-600">Error loading analytics</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -76,10 +83,13 @@ export function AnalyticsChart() {
             <div>
               <p className="text-sm font-medium text-gray-600">Growth Rate</p>
               <p className="text-3xl font-bold text-gray-900 mt-2">
-                {data.growthRate > 0 ? '+' : ''}{data.growthRate}%
+                {data.growthRate > 0 ? "+" : ""}
+                {data.growthRate}%
               </p>
             </div>
-            <div className={`p-3 rounded-lg ${data.growthRate >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
+            <div
+              className={`p-3 rounded-lg ${data.growthRate >= 0 ? "bg-green-100" : "bg-red-100"}`}
+            >
               {data.growthRate >= 0 ? (
                 <TrendingUp className="w-6 h-6 text-green-600" />
               ) : (
@@ -128,14 +138,17 @@ export function AnalyticsChart() {
                 cy="50%"
                 labelLine={false}
                 label={(props: any) =>
-                  `${props?.payload?.industry ?? ''}: ${((props?.percent ?? 0) * 100).toFixed(0)}%`
+                  `${props?.payload?.industry ?? ""}: ${((props?.percent ?? 0) * 100).toFixed(0)}%`
                 }
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="count"
               >
                 {data.leadsByIndustry.map((entry, index) => (
-                  <Cell key={entry.industry} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={entry.industry}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip />
@@ -161,5 +174,5 @@ export function AnalyticsChart() {
         </div>
       </div>
     </div>
-  )
+  );
 }

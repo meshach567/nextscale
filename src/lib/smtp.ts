@@ -56,11 +56,11 @@ export async function sendContactEmail(contact: Contact) {
         <div class="card">
           <h2>New contact from ${escapeHtml(contact.name)}</h2>
           <p><strong>Email:</strong> ${escapeHtml(contact.email)}</p>
-          <p><strong>Company:</strong> ${escapeHtml(contact.company ?? '-')}</p>
-          <p><strong>Industry:</strong> ${escapeHtml(contact.industry ?? '-')}</p>
-          <p><strong>Project type:</strong> ${escapeHtml(contact.projectType ?? '-')}</p>
+          <p><strong>Company:</strong> ${escapeHtml(contact.company ?? "-")}</p>
+          <p><strong>Industry:</strong> ${escapeHtml(contact.industry ?? "-")}</p>
+          <p><strong>Project type:</strong> ${escapeHtml(contact.projectType ?? "-")}</p>
           <hr />
-          <div>${escapeHtml(contact.message).replace(/\n/g, '<br/>')}</div>
+          <div>${escapeHtml(contact.message).replace(/\n/g, "<br/>")}</div>
         </div>
       </body>
     </html>
@@ -80,10 +80,9 @@ export async function sendContactEmail(contact: Contact) {
 // Minimal HTML escaper to avoid accidental injection in the email body
 function escapeHtml(str: string) {
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
-

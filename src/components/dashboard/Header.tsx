@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { Menu, LogOut } from 'lucide-react'
-import { useUIStore } from '@/lib/zustand-store'
-import { Button } from '@/components/ui/button'
+import { Menu, LogOut } from "lucide-react";
+import { useUIStore } from "@/lib/zustand-store";
+import { Button } from "@/components/ui/button";
 
 interface HeaderProps {
-  title: string
+  title: string;
 }
 
 export function Header({ title }: HeaderProps) {
-  const { toggleSidebar } = useUIStore()
+  const { toggleSidebar } = useUIStore();
 
   const handleLogout = async () => {
     // Implement logout with Better Auth
     // await signOut()
-    window.location.href = '/login'
-  }
+    window.location.href = "/login";
+  };
 
   return (
     <header className="h-16 border-b border-gray-200 bg-white">
@@ -44,5 +44,5 @@ export function Header({ title }: HeaderProps) {
         </Button>
       </div>
     </header>
-  )
+  );
 }

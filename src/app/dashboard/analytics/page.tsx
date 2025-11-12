@@ -1,5 +1,5 @@
-import { Header } from '@/components/dashboard/Header'
-import { AnalyticsChart } from '@/components/dashboard/AnalyticsChart'
+import { Header } from "@/components/dashboard/Header";
+import { AnalyticsChart } from "@/components/dashboard/AnalyticsChart";
 
 export default function AnalyticsPage() {
   return (
@@ -9,5 +9,5 @@ export default function AnalyticsPage() {
         <AnalyticsChart />
       </div>
     </div>
-  )
+  );
 }

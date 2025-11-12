@@ -1,4 +1,4 @@
-import  { ContactInput} from '@/utils/validation';
+import { ContactInput } from "@/utils/validation";
 import { sendContactEmail } from "@/lib/smtp";
 
 export async function sendContactNotification(data: ContactInput) {
