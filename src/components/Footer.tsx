@@ -95,7 +95,7 @@ const Footer = () => {
             <div className="space-y-3">
               <p className="text-background/80">📍 Lagos, Nigeria</p>
               <p className="text-background/80">📧 hello@builtandlaunch.com</p>
-              <p className="text-background/80">📞 +234 800 000 0000</p>
+              <p className="text-background/80">📞 +2349037766269</p>
               <p className="text-background/80">🕒 Mon - Fri, 9AM - 6PM WAT</p>
             </div>
           </div>
@@ -103,7 +103,7 @@ const Footer = () => {
 
         <div className="border-t border-background/20 pt-8 text-center">
           <p className="text-background/80">
-            &copy; 2025 BuiltAndLaunch. All rights reserved. |
+            &copy; 2025 Nextscale. All rights reserved. |
             <Link
               href="/privacy"
               className="hover:text-background transition-colors ml-2"
