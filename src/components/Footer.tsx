@@ -94,7 +94,7 @@ const Footer = () => {
             <h3 className="font-bold text-lg mb-6">Contact Info</h3>
             <div className="space-y-3">
               <p className="text-background/80">📍 Lagos, Nigeria</p>
-              <p className="text-background/80">📧 hello@builtandlaunch.com</p>
+              <p className="text-background/80">📧 hello@nextscale.com</p>
               <p className="text-background/80">📞 +2349037766269</p>
               <p className="text-background/80">🕒 Mon - Fri, 9AM - 6PM WAT</p>
             </div>
